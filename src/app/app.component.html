@@ -1,0 +1,240 @@
+<main>
+
+  <p-tabView (onChange)="eventoTabViewPrincipal()">
+    
+    <p-tabPanel 
+    header="Finanças">
+
+      <p-card
+      header="Inserir Finança"
+      >
+
+        <form #financaForm="ngForm" (ngSubmit)="eventoBotaoAdicionarFinanca(financaForm)">
+
+          <span class="p-float-label">
+
+            <input type="text" id="float-input" pInputText name="nome" ngModel>
+            <label for="float-input">{{rotuloNome}}</label>
+
+          </span>
+
+          <span class="p-float-label">
+
+            <input type="number" id="float-input" pInputText name="valor" ngModel>
+            <label for="float-input">{{rotuloNumero}}</label>
+
+          </span>
+
+          <span class="p-float-label">
+          
+            <p-selectButton 
+            [options]="opcoesBotaoReceitaOuDespesa"
+            optionLabel="opcao"
+            optionValue="valor"
+            [(ngModel)]="botaoTipoFinancaSelecionado" name='tipoFinanca'>
+
+            </p-selectButton>
+            
+          </span>
+
+          <span class="p-float-label">
+          
+            <p-selectButton 
+            [options]="opcoesBotaoRepeticao"
+            optionLabel="opcao"
+            optionValue="valor"
+            [(ngModel)]="botaoRepeticaoSelecionado" name='repeticao'>
+
+            </p-selectButton>
+            
+          </span>
+
+          <p-calendar
+          [(ngModel)]="dataInserir" name='data' 
+          [monthNavigator]="true" 
+          [yearNavigator]="true"
+          yearRange="2000:2030"
+          inputId="navigators">
+
+
+          </p-calendar>
+
+          <div class="adicionar-botao">
+
+            <p-button label="Adicionar" type="submit" icon="pi pi-check"></p-button>
+
+          </div>
+
+        </form>
+
+      </p-card>
+
+      <p-card
+      header="Histórico"  
+      >
+        <span class="p-float-label"> 
+
+          <p-selectButton 
+          [options]="opcoesBotaoTipoSelecao"
+          optionLabel="opcao"
+          optionValue="valor"
+          [(ngModel)]="botaoTipoSelecaoSelecionado"
+          (onChange)="eventoBotaoTipoSelecaoHistorico()">
+            
+  
+          </p-selectButton>
+        
+        </span>
+
+        <span class="p-float-label"> 
+          
+          <p-selectButton 
+          [options]="opcoesBotaoData"
+          optionLabel="opcao"
+          optionValue="valor"
+          [(ngModel)]="botaoTipoDataHistoricoSelecionado"
+          (onChange)="eventoBotaoDataHistorico()">
+            
+  
+          </p-selectButton>
+        
+        </span>
+
+        <p-calendar 
+            [(ngModel)]="dataHistorico"
+            [monthNavigator]="true" 
+            [yearNavigator]="true"
+            yearRange="2000:2030"
+            [disabled]="botaoTipoDataHistoricoSelecionado"
+            inputId="navigators"
+            (ngModelChange)="eventoDataHistorico()">
+
+        </p-calendar>
+
+        <p-scrollPanel [style]="{width: '100%', height: '410px'}">
+          <div class="financa" *ngFor="let financa of financasVisiveis">
+            <p-card>
+              <div class="nome-financa">
+                <p>{{financa.nome}} </p>
+              </div>
+
+              <div class="valor-financa">
+                <p>{{financa.valor}} R$</p>
+              </div>
+
+              <div class="repeticao-financa">
+                <p>{{opcoesBotaoRepeticao[financa.repeticao].opcao}}</p>
+              </div>
+
+            </p-card>
+            <p-card>
+              <div class="data-financa">
+                <p>{{financa.dia}}/{{financa.mes}}/{{financa.ano}}</p>
+              </div>
+            </p-card>
+          </div>
+
+        </p-scrollPanel>
+
+      </p-card>
+
+    </p-tabPanel>
+
+    <p-tabPanel 
+    header="Gráficos"> 
+
+      <p-card>
+
+        <span class="p-float-label">
+
+          <p-selectButton 
+            [options]="opcoesBotaoData"
+            optionLabel="opcao"
+            optionValue="valor"
+            [(ngModel)]="botaoTipoDataHistoricoSelecionado"
+            (onChange)="eventoBotaoDataHistorico()">
+            
+  
+          </p-selectButton>
+        
+        </span>
+      
+        <p-calendar 
+        [(ngModel)]="dataHistorico"
+        [monthNavigator]="true" 
+        [yearNavigator]="true"
+        yearRange="2000:2030"
+        [disabled]="botaoTipoDataHistoricoSelecionado"
+        inputId="navigators"
+        (ngModelChange)="eventoDataGraficos()">
+        
+        </p-calendar>
+
+      </p-card>
+    
+      <p-card header="Doughnut"> 
+      
+        <span class="p-float-label"> 
+
+          <p-selectButton 
+          [options]="opcoesBotaoTipoSelecao"
+          optionLabel="opcao"
+          optionValue="valor"
+          [(ngModel)]="botaoTipoSelecaoSelecionado"
+          (onChange)="eventoBotaoTipoSelecaoGraficos()">
+          
+
+          </p-selectButton>
+      
+        </span>
+
+        <span class="grafico-botao">
+
+          <p-selectButton 
+          [options]="opcoesBotaoTipoGraficoDoughnut"
+          optionLabel="opcao"
+          optionValue="valor"
+          [(ngModel)]="botaoTipoGraficoDoughnutSelecionado"
+          (onChange)="eventoBotaoTipoGraficoDoughnut()">
+        
+          </p-selectButton>
+
+        </span>
+      
+        <p-card>
+
+          <p-chart type="doughnut" 
+          [data]="dadosGraficoDoughnut">
+
+          </p-chart>
+
+        </p-card>
+
+        <p-card
+        header="Barras Verticais">   
+        
+          <span class="grafico-botao">  
+
+            <p-selectButton 
+            [options]="opcoesBotaoTipoGraficoTabela"
+            optionLabel="opcao"
+            optionValue="valor"
+            [(ngModel)]="botaoTipoGraficoTabelaSelecionado"
+            (onChange)="eventoBotaoTipoGraficoTabela()">
+          
+            
+            </p-selectButton>
+  
+          </span>
+
+          <p-chart type="bar" [data]="dadosGraficoTabela" [options]="formatacaoGraficoTabela"></p-chart>
+
+        </p-card>
+
+      </p-card>
+    
+    </p-tabPanel>
+
+  </p-tabView>
+
+</main>

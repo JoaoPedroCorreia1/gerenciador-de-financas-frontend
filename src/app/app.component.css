@@ -1,0 +1,56 @@
+main{
+    width: 40%;
+    margin: auto;
+}
+
+span, input{
+    width: 100%;
+}
+
+.p-float-label{
+    margin-bottom: 24px;
+}
+
+.adicionar-botao{
+    display: flex;
+    justify-content: flex-end;
+    margin: 12px 0;
+}
+
+.financa{
+    margin-bottom: 4px;
+}
+
+.nome-financa{
+    font-size: 24px;
+    text-align: center;
+    height: 50px;
+}
+
+.valor-financa{
+    font-size: 24px;
+    text-align: center;
+    height: 30px;
+}
+
+.repeticao-financa{
+    font-size: 20px;
+    text-align: center;
+    height: 0px;
+}
+
+.data-financa{
+    font-size: 10px;
+    text-align: left;
+    height: 10px;
+}
+
+.p-scrollpanel p {
+    padding: 10cm;
+    line-height: 1.5;
+    margin: 0;
+}
+
+.grafico-botao{
+    margin: 30px;
+}
